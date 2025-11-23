@@ -3,9 +3,8 @@
 Nuabase turns LLM prompts into type-safe functions and call them directly from your front-end. Set up your free account
 now at [Nuabase](https://nuabase.com).
 
-This is the Ruby SDK that is intended only to generate short-lived JWT tokens, to be passed to the Nuabase front-end
-SDK [Nuabase TypeScript SDK](https://github.com/nuabase/ts-sdk). This will let you use Nuabase directly from your
-front-end to make typed LLM requests.
+This is the Ruby SDK that is intended only to generate short-lived JWT tokens, to be passed to the [Nuabase front-end
+SDK](https://github.com/nuabase/ts-sdk). With this you can make LLM requests directly from your front-end.
 
 ## Installation
 
