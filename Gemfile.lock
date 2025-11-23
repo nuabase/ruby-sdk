@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    nuabase (0.1.0)
+      jwt
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    base64 (0.3.0)
+    jwt (3.1.2)
+      base64
+    rake (13.3.1)
+
+PLATFORMS
+  arm64-darwin-23
+  ruby
+
+DEPENDENCIES
+  nuabase!
+  rake (~> 13.0)
+
+BUNDLED WITH
+   2.5.17
