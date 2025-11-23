@@ -1,4 +1,11 @@
-# Nuabase
+# Nuabase Ruby SDK
+
+Nuabase turns LLM prompts into type-safe functions and call them directly from your front-end. Set up your free account
+now at [Nuabase](https://nuabase.com).
+
+This is the Ruby SDK that is intended only to generate short-lived JWT tokens, to be passed to the Nuabase front-end
+SDK [Nuabase TypeScript SDK](https://github.com/nuabase/ts-sdk). This will let you use Nuabase directly from your
+front-end to make typed LLM requests.
 
 ## Installation
 
@@ -12,15 +19,11 @@ Install the gem and add to the application's Gemfile by executing:
 
 Obtain a Signing Key Secret from the [Nuabase Console](https://console.nuabase.com/dashboard/signing-keys/new).
 
-This key is a secret and must be stored securely on your backend server. It must **not** be exposed to the client-side code. We recommend storing it as an encrypted Rails credential or as an environment variable named `NUABASE_SIGNING_KEY_SECRET`.
+This key is a secret and must be stored securely on your backend server. It must **not** be exposed to the client-side
+code. We recommend storing it as an encrypted Rails credential or as an environment variable named
+`NUABASE_SIGNING_KEY_SECRET`.
 
-The Signing Key Secret is used by your backend to generate short-lived JWT tokens via this SDK. The typical workflow is:
-
-1.  Expose an endpoint on your backend (e.g., `POST /.well-known/nuabase/token`).
-2.  **IMPORTANT**: This endpoint MUST be authenticated. You must verify the user's identity before generating a token. Do not expose this endpoint publicly.
-3.  Your frontend, loaded by an authenticated user, calls this endpoint.
-4.  Your backend uses the Nuabase SDK to generate a token for that specific user.
-5.  The frontend receives the token and uses it to directly make authenticated LLM calls to the Nuabase server, using the [Nuabase TypeScript SDK](https://github.com/nuabase/ts-sdk).
+The Signing Key Secret is used by your backend to generate short-lived JWT tokens via this SDK.
 
 ### Basic Usage
 
@@ -30,7 +33,7 @@ require 'nuabase'
 # Initialize the generator with your signing key secret and the user ID
 generator = Nuabase::NuaTokenGenerator.new(
   signing_key_secret: 'pk_...', # Your Nuabase Signing Key Secret
-  user_id: 'user_123'           # The ID of the user in your system
+  user_id: 'user_123' # The ID of the user in your system
 )
 
 # Generate the token
@@ -64,6 +67,7 @@ end
 2. Create the controller `app/controllers/nuabase/tokens_controller.rb`:
 
 ```ruby
+
 module Nuabase
   class TokensController < ApplicationController
     # IMPORTANT: Ensure the user is authenticated.
@@ -83,9 +87,22 @@ module Nuabase
 end
 ```
 
+## Workflow
+
+The typical workflow is:
+
+1. Expose an endpoint on your backend (e.g., `POST /.well-known/nuabase/token`).
+2. **IMPORTANT**: This endpoint MUST be authenticated. You must verify the user's identity before generating a token. Do
+   not expose this endpoint publicly.
+3. Your frontend, loaded by an authenticated user, calls this endpoint.
+4. Your backend uses the Nuabase SDK to generate a token for that specific user.
+5. The frontend receives the token and uses it to directly make authenticated LLM calls to the Nuabase server, using
+   the [Nuabase TypeScript SDK](https://github.com/nuabase/ts-sdk).
+
 ### Token Expiration and Automatic Refresh
 
-Tokens expire after 180 seconds by default. You can override the TTL by passing `expiry_seconds:` when instantiating `Nuabase::NuaTokenGenerator`:
+Tokens expire after 180 seconds by default. You can override the TTL by passing `expiry_seconds:` when instantiating
+`Nuabase::NuaTokenGenerator`:
 
 ```ruby
 token_data = Nuabase::NuaTokenGenerator.new(
@@ -95,7 +112,8 @@ token_data = Nuabase::NuaTokenGenerator.new(
 ).generate
 ```
 
-Keep the expiration short, to prevent abuse of leaked token. The Nuabase TypeScript SDK will automatically refresh the token when it expires.
+Keep the expiration short, to prevent abuse of leaked token. The Nuabase TypeScript SDK will automatically refresh the
+token when it expires.
 
 ## Contributing
 
